@@ -7,7 +7,7 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@400;600;700;800;900&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -16,7 +16,6 @@
       --bg-dark: #0a0608;
       --panel-dark: #140a0e;
       --red-accent: #e6194b;
-      --red-dark: #660019;
       --gold-accent: #ffb703;
       --text-light: #f8fafc;
       --text-sub: #94a3b8;
@@ -43,29 +42,22 @@
       z-index: 999; transition: opacity 0.5s ease, visibility 0.5s ease;
     }
 
-    .start-screen.hide {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
+    .start-screen.hide { opacity: 0; visibility: hidden; pointer-events: none; }
 
     .game-logo {
-      font-family: 'Bungee', cursive;
-      font-size: 36px;
-      color: var(--red-accent);
-      text-shadow: 0 0 20px rgba(230, 25, 75, 0.6);
-      text-align: center;
-      margin-bottom: 20px;
+      font-family: 'Bungee', cursive; font-size: 36px;
+      color: var(--red-accent); text-shadow: 0 0 20px rgba(230, 25, 75, 0.6);
+      text-align: center; margin-bottom: 20px;
     }
 
     .btn-start {
       background: linear-gradient(135deg, var(--red-accent), #990026);
-      color: #fff; border: none; padding: 14px 38px;
+      color: #fff; border: none; padding: 16px 42px;
       font-family: 'Bungee', cursive; font-size: 16px;
       border-radius: 30px; cursor: pointer;
-      box-shadow: 0 0 25px rgba(230, 25, 75, 0.5);
-      transition: transform 0.2s;
+      box-shadow: 0 0 25px rgba(230, 25, 75, 0.6);
       -webkit-tap-highlight-color: transparent;
+      user-select: none;
     }
     .btn-start:active { transform: scale(0.95); }
 
@@ -84,8 +76,7 @@
     
     .hero-bg-img {
       position: absolute; right: 0; top: 0; width: 65%; height: 100%;
-      object-fit: cover; filter: brightness(0.7) contrast(1.1);
-      cursor: pointer;
+      object-fit: cover; filter: brightness(0.7) contrast(1.1); cursor: pointer;
       mask-image: linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
       -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
     }
@@ -93,14 +84,13 @@
     .stats-card-left {
       position: absolute; left: 20px; top: 20px; width: 280px;
       background: rgba(45, 10, 20, 0.9); border: 1px solid rgba(230, 25, 75, 0.4);
-      border-radius: 16px; padding: 16px; backdrop-filter: blur(12px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5); z-index: 2;
+      border-radius: 16px; padding: 16px; backdrop-filter: blur(12px); z-index: 2;
     }
 
     .card-badge {
       display: inline-block; background: var(--red-accent); color: #fff;
       font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 10px;
-      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+      text-transform: uppercase; margin-bottom: 10px;
     }
 
     .stats-row {
@@ -114,12 +104,8 @@
     .hero-top-title {
       position: absolute; left: 320px; top: 30px; z-index: 2; max-width: 320px;
     }
-    .hero-top-title h1 {
-      font-family: 'Bungee', cursive; font-size: 26px; color: #fff; line-height: 1.2;
-    }
-    .hero-top-title p {
-      font-size: 12px; color: #cbd5e1; margin-top: 10px; line-height: 1.5;
-    }
+    .hero-top-title h1 { font-family: 'Bungee', cursive; font-size: 26px; color: #fff; line-height: 1.2; }
+    .hero-top-title p { font-size: 12px; color: #cbd5e1; margin-top: 10px; line-height: 1.5; }
 
     /* SECTION 2: MIDDLE SECTION */
     .hero-mid {
@@ -129,30 +115,22 @@
       align-items: center; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.7);
     }
 
-    .hero-mid::before {
-      content: ''; position: absolute; left: 0; top: 0; width: 50%; height: 100%;
-      background-image: radial-gradient(rgba(230, 25, 75, 0.25) 2px, transparent 2px);
-      background-size: 14px 14px; opacity: 0.6; pointer-events: none;
-    }
-
     .mid-text { width: 50%; z-index: 2; padding-right: 20px; }
-    .mid-text h2 {
-      font-family: 'Bungee', cursive; font-size: 22px; color: #fff; margin-bottom: 12px;
-    }
+    .mid-text h2 { font-family: 'Bungee', cursive; font-size: 22px; color: #fff; margin-bottom: 12px; }
     .mid-text p { font-size: 12px; color: var(--text-sub); line-height: 1.6; }
 
     .mid-img-wrapper {
       width: 50%; height: 280px; border-radius: 16px; overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.6); border: 2px solid var(--red-accent);
-      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6); border: 2px solid var(--red-accent); cursor: pointer;
     }
     .mid-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* SECTION 3: MUSIC PLAYER */
+    /* SECTION 3: MUSIC PLAYER & AVATARS */
     .hero-bottom-grid {
       display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; width: 100%;
     }
 
+    /* MUSIC PLAYER CARD */
     .music-app-card {
       background: rgba(20, 8, 12, 0.95); border: 1px solid var(--card-border);
       border-radius: 20px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
@@ -171,10 +149,9 @@
 
     .progress-bar-container { width: 100%; margin: 10px 0; }
     .seek-slider {
-      -webkit-appearance: none;
+      -webkit-appearance: none; appearance: none;
       width: 100%; height: 6px; border-radius: 3px;
-      background: rgba(255, 255, 255, 0.2);
-      outline: none; cursor: pointer;
+      background: rgba(255, 255, 255, 0.2); outline: none; cursor: pointer;
     }
     .seek-slider::-webkit-slider-thumb {
       -webkit-appearance: none; appearance: none;
@@ -185,9 +162,9 @@
 
     .player-controls { display: flex; justify-content: space-between; align-items: center; }
     .btn-play {
-      background: var(--red-accent); color: #fff; border: none; width: 44px; height: 44px;
-      border-radius: 50%; font-size: 16px; cursor: pointer; font-family: 'Bungee';
-      display: flex; justify-content: center; align-items: center;
+      background: linear-gradient(135deg, var(--red-accent), #990026);
+      color: #fff; border: none; padding: 10px 24px;
+      border-radius: 20px; font-size: 12px; cursor: pointer; font-family: 'Bungee', cursive;
       box-shadow: 0 4px 12px rgba(230, 25, 75, 0.5);
       -webkit-tap-highlight-color: transparent;
     }
@@ -196,16 +173,12 @@
       background: rgba(20, 8, 12, 0.95); border: 1px solid var(--card-border);
       border-radius: 20px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
-    .avatars-header {
-      font-family: 'Bungee', cursive; font-size: 14px; color: var(--gold-accent);
-      margin-bottom: 12px;
-    }
+    .avatars-header { font-family: 'Bungee', cursive; font-size: 14px; color: var(--gold-accent); margin-bottom: 12px; }
 
     .avatar-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
     .avatar-item {
       background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px; padding: 4px; text-align: center; transition: transform 0.2s;
-      cursor: pointer;
+      border-radius: 10px; padding: 4px; text-align: center; cursor: pointer; transition: transform 0.2s;
     }
     .avatar-item:hover { transform: translateY(-3px); border-color: var(--red-accent); }
     .avatar-item img { width: 100%; height: 60px; object-fit: cover; border-radius: 6px; display: block; }
@@ -248,25 +221,18 @@
     .image-modal.show { display: flex; opacity: 1; }
     .modal-content-img {
       max-width: 90%; max-height: 85vh; border-radius: 12px;
-      box-shadow: 0 0 30px rgba(230, 25, 75, 0.8);
-      border: 2px solid var(--red-accent); transform: scale(0.85); transition: transform 0.3s ease;
+      border: 2px solid var(--red-accent); box-shadow: 0 0 30px rgba(230, 25, 75, 0.8);
     }
-    .image-modal.show .modal-content-img { transform: scale(1); }
-    .close-modal-btn {
-      position: absolute; top: 20px; right: 25px; color: #fff;
-      font-size: 35px; font-weight: bold; cursor: pointer; user-select: none;
-    }
+    .close-modal-btn { position: absolute; top: 20px; right: 25px; color: #fff; font-size: 35px; cursor: pointer; }
 
     @media (max-width: 768px) {
       .hero-top { height: auto; padding: 15px; display: flex; flex-direction: column; gap: 15px; }
       .hero-bg-img { position: relative; width: 100%; height: 180px; mask-image: none; border-radius: 12px; }
       .stats-card-left { position: relative; left: 0; top: 0; width: 100%; }
       .hero-top-title { position: relative; left: 0; top: 0; max-width: 100%; }
-
       .hero-mid { flex-direction: column; gap: 15px; text-align: center; }
       .mid-text, .mid-img-wrapper { width: 100%; padding: 0; }
       .mid-img-wrapper { height: 200px; }
-
       .hero-bottom-grid { grid-template-columns: 1fr; }
       .avatar-grid { grid-template-columns: repeat(5, 1fr); }
       .avatar-item img { height: 50px; }
@@ -279,7 +245,7 @@
   <div class="start-screen" id="startScreen">
     <div class="game-logo">WOLVESVILLE</div>
     <p style="color: var(--text-sub); font-size: 13px; margin-bottom: 20px;">SEASON 79 • SHADOW VS VINH DUEL</p>
-    <button class="btn-start" id="btnStartGame" onclick="enterGame()">BẮT ĐẦU TRẬN ĐẤU ⚔️</button>
+    <button class="btn-start" onclick="enterGame()">BẮT ĐẦU TRẬN ĐẤU ⚔️</button>
   </div>
 
   <!-- GIAO DIỆN CHÍNH -->
@@ -310,7 +276,7 @@
 
     <div class="hero-bottom-grid">
       
-   <!-- KHUNG PLAYER CÓ THANH KÉO TUA CHUẨN DI ĐỘNG -->
+      <!-- KHUNG PLAYER CÓ THANH KÉO TUA CHUẨN DI ĐỘNG -->
       <div class="music-app-card">
         <div>
           <div class="player-header">
@@ -326,7 +292,12 @@
           </div>
         </div>
 
-      <!-- ĐÃ CẬP NHẬT ĐÚNG 10 TÊN HIỂN THỊ CỦA BẠN -->
+        <div class="player-controls">
+          <span style="font-size:11px; color:var(--text-sub);" id="timeDisplay">0:00 / 0:00</span>
+          <button class="btn-play" id="playBtn" onclick="toggleAudio()">▶ PLAY</button>
+        </div>
+      </div>
+
       <div class="avatars-box">
         <div class="avatars-header">🐺 10 FRIENDS IN ROOM</div>
         <div class="avatar-grid">
@@ -364,6 +335,7 @@
     <img id="modalFullImg" class="modal-content-img" src="" alt="Full Size">
   </div>
 
+  <script>
     // KHỞI TẠO ÂM THANH QUA JAVASCRIPT TRỰC TIẾP
     const audio = new Audio('music/music.mp3');
     audio.loop = true;
@@ -385,8 +357,8 @@
         playBtn.innerText = '▶ PLAY';
       });
     }
-    
-// BẬT / TẮT NHẠC THỦ CÔNG
+
+    // BẬT / TẮT NHẠC THỦ CÔNG
     function toggleAudio() {
       if (audio.paused) {
         audio.play().then(() => {
@@ -422,7 +394,7 @@
       }
     }
 
-    // Sửa Tên Ảnh Định Dạng .jfif, .jpg, .png
+    // SỬA TÊN ẢNH ĐỊNH DẠNG TỰ ĐỘNG
     function smartJfifFix(img, name) {
       const cleanName = name.replace(/\s+/g, '');
       const variations = [
@@ -443,7 +415,7 @@
       }
     }
 
-    // Lightbox Phóng To Ảnh
+    // LIGHTBOX PHÓNG TO ẢNH
     function openImgModal(src) {
       document.getElementById('modalFullImg').src = src;
       document.getElementById('imgModal').classList.add('show');
@@ -461,7 +433,7 @@
       });
     });
 
-    // Tường Lời Nhắn
+    // TƯỜNG LỜI NHẮN
     function postMessage() {
       const input = document.getElementById('chatInput');
       const text = input.value.trim();
@@ -480,7 +452,7 @@
       let msgs = JSON.parse(localStorage.getItem('wv_chat_notes') || '[]');
 
       let html = `
-        <div class="note-card"><strong style="color:var(--gold-accent);">Shadow 🔥:</strong> Trận này tôi làm Sói thì ông chuẩn bị nhận đạn nhé! NO LUCK ONLY SKILL!</div>
+        <div class="note-card"><strong style="color:var(--gold-accent);">Shadow 🔥:</strong> Trận này tôi làm Sói thì ông chuẩn bị tinh thần chết đầu tiên đi nhé! NO LUCK ONLY SKILL!</div>
         <div class="note-card" style="border-left-color: #22d3ee;"><strong style="color:#22d3ee;">Vinh ⚡:</strong> Gặp nhau ở vòng treo cổ em trai! PLAY SMART - STAY STRONG!</div>
       `;
 
