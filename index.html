@@ -378,11 +378,12 @@
     <img id="modalFullImg" class="modal-content-img" src="" alt="Full Size">
   </div>
 
-<!-- AUDIO: TỰ ĐỘNG TÌM ĐÚNG FILE music.mp3 TRONG FOLDER music -->
-  <audio id="bgmusic" preload="auto" loop playsinline webkit-playsinline>
+<!-- THẺ ÂM THANH ĐÃ ĐƯỢC ĐỐI CHIẾU CHÍNH XÁC VỚI FILE BẠN ĐÃ TẢI LÊN -->
+  <audio id="bgmusic" loop preload="auto">
+    <source src="music/Biometrix x Sarah De Warren - The Upside Down_2.mp3" type="audio/mpeg">
+    <source src="music/Biometrix x Sarah De Warren - The Upside Down.mp3" type="audio/mpeg">
+    <source src="music/upsidedown.mp3" type="audio/mpeg">
     <source src="music/music.mp3" type="audio/mpeg">
-    <source src="./music/music.mp3" type="audio/mpeg">
-    <source src="/music/music.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -390,66 +391,54 @@
     const playBtn = document.getElementById('playBtn');
     const seekSlider = document.getElementById('seekSlider');
     const timeDisplay = document.getElementById('timeDisplay');
-    const btnStartGame = document.getElementById('btnStartGame');
 
-    let isSeeking = false;
-
-    // Định dạng thời gian
-    function formatTime(seconds) {
-      if (!Number.isFinite(seconds) || seconds < 0) return '0:00';
-      const minutes = Math.floor(seconds / 60);
-      const secs = Math.floor(seconds % 60);
-      return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-    }
-
-    // Đồng bộ nút Play/Pause
-    function updatePlayButton() {
-      playBtn.innerText = audio.paused ? '▶' : '⏸';
-      playBtn.setAttribute(
-        'aria-label',
-        audio.paused ? 'Phát nhạc' : 'Tạm dừng nhạc'
-      );
-    }
-
-    // Phát nhạc trực tiếp bằng User Gesture
-    function playMusic() {
-      const promise = audio.play();
-
-      if (promise !== undefined) {
-        promise
-          .then(() => updatePlayButton())
-          .catch((error) => {
-            console.warn('Trình duyệt chặn autoplay:', error);
-            updatePlayButton();
-          });
-      }
-    }
-
-    // Hàm Bắt đầu trò chơi
+    // Mở Game & Phát Âm Thanh An Toàn
     function enterGame() {
-      loadMessages();
-      playMusic();
       document.getElementById('startScreen').classList.add('hide');
+      loadMessages();
+
+      // Phát nhạc sau khi ẩn màn hình đen
+      audio.play().then(() => {
+        playBtn.innerText = '⏸';
+      }).catch(err => {
+        console.log("Autoplay blocked or file not found:", err);
+        playBtn.innerText = '▶';
+      });
     }
 
-    // Nút Bật/Tắt Nhạc
+    // Nút Bật / Tắt Nhạc Thủ Công
     function toggleAudio() {
       if (audio.paused) {
-        playMusic();
+        audio.play().then(() => {
+          playBtn.innerText = '⏸';
+        }).catch(err => console.log(err));
       } else {
         audio.pause();
-        updatePlayButton();
+        playBtn.innerText = '▶';
       }
     }
 
-    // Gắn sự kiện click vào nút Bắt Đầu
-    btnStartGame.addEventListener('click', enterGame);
+    // Cập Nhật Thanh Tua Nhạc & Thời Gian
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration && !isNaN(audio.duration)) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        seekSlider.value = pct;
+        
+        let curMins = Math.floor(audio.currentTime / 60);
+        let curSecs = Math.floor(audio.currentTime % 60);
+        let durMins = Math.floor(audio.duration / 60);
+        let durSecs = Math.floor(audio.duration % 60);
 
-    // Cập nhật metadata khi MP3 tải xong
-    audio.addEventListener('loadedmetadata', function() {
-      seekSlider.value = 0;
-      timeDisplay.innerText = `0:00 / ${formatTime(audio.duration)}`;
+        timeDisplay.innerText = `${curMins}:${curSecs < 10 ? '0' : ''}${curSecs} / ${durMins}:${durSecs < 10 ? '0' : ''}${durSecs}`;
+      }
     });
+
+    // Kéo Thanh Thời Gian Để Tua
+    function seekAudio(value) {
+      if (audio.duration && !isNaN(audio.duration)) {
+        audio.currentTime = (value / 100) * audio.duration;
+      }
+    }
 
     // Cập nhật tiến trình thời gian
     audio.addEventListener('timeupdate', function() {
@@ -485,12 +474,6 @@
 
     audio.addEventListener('play', updatePlayButton);
     audio.addEventListener('pause', updatePlayButton);
-
-    // Báo lỗi nếu không tải được audio
-    audio.addEventListener('error', function() {
-      console.error('Không tìm thấy file MP3 trong thư mục music/. Vui lòng kiểm tra lại tên file.');
-      playBtn.innerText = '▶';
-    });
 
     // Sửa Tên Ảnh Định Dạng .jfif, .jpg, .png
     function smartJfifFix(img, name) {
