@@ -369,71 +369,33 @@
     <img id="modalFullImg" class="modal-content-img" src="" alt="Full Size">
   </div>
 
-  <!-- BỘ THẺ AUDIO HỖ TRỢ CẢ ĐIỆN THOẠI LẪN MÁY TÍNH -->
-  <audio id="bgmusic" loop preload="auto">
-    <source src="music/Biometrix%20x%20Sarah%20De%20Warren%20-%20The%20Upside%20Down_3.mp3" type="audio/mpeg">
-    <source src="music/Biometrix%20x%20Sarah%20De%20Warren%20-%20The%20Upside%20Down_2.mp3" type="audio/mpeg">
-    <source src="music/Biometrix%20x%20Sarah%20De%20Warren%20-%20The%20Upside%20Down.mp3" type="audio/mpeg">
-    <source src="music/upsidedown.mp3" type="audio/mpeg">
-    <source src="music/music.mp3" type="audio/mpeg">
-  </audio>
+ <!-- KHU VỰC PHÁT NHẠC ĐƠN GIẢN HÓA CỦA BẠN -->
+      <div class="music-player">
+        <div class="music-info"> The Upside Down 🎶</div>
+        <button class="play-btn" id="playBtn" onclick="toggleAudio()">▶ PLAY</button>
+      </div>
+  // BẬT / TẮT NHẠC ĐƠN GIẢN CHUẨN CỦA BẠN
+    function toggleAudio() {
+      var audio = document.getElementById('bgmusic');
+      var btn = document.getElementById('playBtn');
 
-  <script>
-    const audio = document.getElementById('bgmusic');
-    const playBtn = document.getElementById('playBtn');
-    const seekSlider = document.getElementById('seekSlider');
-    const timeDisplay = document.getElementById('timeDisplay');
+      if (audio.paused) {
+        audio.play().then(() => { 
+          btn.innerHTML = '⏸ PAUSE'; 
+        }).catch(err => console.log(err));
+      } else {
+        audio.pause();
+        btn.innerHTML = '▶ PLAY';
+      }
+    }
 
-    // Mở Game & Ép Kích Hoạt Audio Context Trên Mobile
+    // MỞ GAME & TỰ ĐỘNG PHÁT NHẠC KHI BẤM BẮT ĐẦU
     function enterGame() {
       document.getElementById('startScreen').classList.add('hide');
       loadMessages();
-
-      // Cố gắng phát nhạc ngay khi bấm nút bắt đầu
-      audio.load();
-      audio.play().then(() => {
-        playBtn.innerText = '⏸';
-      }).catch(err => {
-        console.log("Mobile browser restricted autoplay:", err);
-        playBtn.innerText = '▶';
-      });
-    }
-
-    // Bật / Tắt Nhạc Thủ Công (Hỗ trợ cả chạm và click)
-    function toggleAudio() {
-      if (audio.paused) {
-        audio.play().then(() => {
-          playBtn.innerText = '⏸';
-        }).catch(err => {
-          console.log("Play error:", err);
-          alert("Hãy kiểm tra lại xem file nhạc đã có trong thư mục music/ trên GitHub chưa nhé!");
-        });
-      } else {
-        audio.pause();
-        playBtn.innerText = '▶';
-      }
-    }
-
-    // Cập Nhật Thời Gian & Thanh Kéo
-    audio.addEventListener('timeupdate', () => {
-      if (audio.duration && !isNaN(audio.duration)) {
-        const pct = (audio.currentTime / audio.duration) * 100;
-        seekSlider.value = pct;
-        
-        let curMins = Math.floor(audio.currentTime / 60);
-        let curSecs = Math.floor(audio.currentTime % 60);
-        let durMins = Math.floor(audio.duration / 60);
-        let durSecs = Math.floor(audio.duration % 60);
-
-        timeDisplay.innerText = `${curMins}:${curSecs < 10 ? '0' : ''}${curSecs} / ${durMins}:${durSecs < 10 ? '0' : ''}${durSecs}`;
-      }
-    });
-
-    // Tua nhạc
-    function seekAudio(value) {
-      if (audio.duration && !isNaN(audio.duration)) {
-        audio.currentTime = (value / 100) * audio.duration;
-      }
+      
+      // Tự động mồi nhạc khi bắt đầu trận đấu
+      toggleAudio();
     }
 
     // Sửa Tên Ảnh Định Dạng .jfif, .jpg, .png
