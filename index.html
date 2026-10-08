@@ -369,12 +369,14 @@
     <img id="modalFullImg" class="modal-content-img" src="" alt="Full Size">
   </div>
 
- <!-- KHU VỰC PHÁT NHẠC ĐƠN GIẢN HÓA CỦA BẠN -->
-      <div class="music-player">
-        <div class="music-info"> The Upside Down 🎶</div>
-        <button class="play-btn" id="playBtn" onclick="toggleAudio()">▶ PLAY</button>
-      </div>
-  // BẬT / TẮT NHẠC ĐƠN GIẢN CHUẨN CỦA BẠN
+  <!-- THẺ AUDIO TẬP TRUNG FILE MUSIC.MP3 -->
+  <audio id="bgmusic" loop preload="auto" playsinline webkit-playsinline>
+    <source src="music/music.mp3" type="audio/mpeg">
+    <source src="music/upsidedown.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // BẬT / TẮT NHẠC
     function toggleAudio() {
       var audio = document.getElementById('bgmusic');
       var btn = document.getElementById('playBtn');
@@ -382,20 +384,28 @@
       if (audio.paused) {
         audio.play().then(() => { 
           btn.innerHTML = '⏸ PAUSE'; 
-        }).catch(err => console.log(err));
+        }).catch(err => console.log("Play blocked:", err));
       } else {
         audio.pause();
         btn.innerHTML = '▶ PLAY';
       }
     }
 
-    // MỞ GAME & TỰ ĐỘNG PHÁT NHẠC KHI BẤM BẮT ĐẦU
+    // KHI BẤM NÚT BẮT ĐẦU TRÊN ĐIỆN THOẠI -> VÀO TRANG VÀ NỔ NHẠC NGAY
     function enterGame() {
       document.getElementById('startScreen').classList.add('hide');
       loadMessages();
-      
-      // Tự động mồi nhạc khi bắt đầu trận đấu
-      toggleAudio();
+
+      var audio = document.getElementById('bgmusic');
+      var btn = document.getElementById('playBtn');
+
+      audio.load();
+      audio.play().then(() => {
+        btn.innerHTML = '⏸ PAUSE';
+      }).catch(err => {
+        console.log("Autoplay prevented by mobile browser:", err);
+        btn.innerHTML = '▶ PLAY';
+      });
     }
 
     // Sửa Tên Ảnh Định Dạng .jfif, .jpg, .png
