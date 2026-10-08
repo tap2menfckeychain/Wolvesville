@@ -364,6 +364,28 @@
     <img id="modalFullImg" class="modal-content-img" src="" alt="Full Size">
   </div>
 
+    // KHỞI TẠO ÂM THANH QUA JAVASCRIPT TRỰC TIẾP
+    const audio = new Audio('music/music.mp3');
+    audio.loop = true;
+
+    const playBtn = document.getElementById('playBtn');
+    const seekSlider = document.getElementById('seekSlider');
+    const timeDisplay = document.getElementById('timeDisplay');
+
+    // MỞ GAME VÀ ÉP PHÁT NHẠC TỪ CÚ CHẠM MÀN HÌNH MỞ ĐẦU
+    function enterGame() {
+      document.getElementById('startScreen').classList.add('hide');
+      loadMessages();
+
+      // Kích hoạt nạp dữ liệu nhạc ngay lập tức
+      audio.play().then(() => {
+        playBtn.innerText = '⏸ PAUSE';
+      }).catch(err => {
+        console.log("Autoplay caught on mobile:", err);
+        playBtn.innerText = '▶ PLAY';
+      });
+    }
+    
 // BẬT / TẮT NHẠC THỦ CÔNG
     function toggleAudio() {
       if (audio.paused) {
