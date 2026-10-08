@@ -295,7 +295,7 @@
         <h1>KEEP WRITING DOWN YOUR DREAM</h1>
         <p>Thách thức mọi giới hạn trong đêm trăng ma sói. Đừng bỏ cuộc khi trận đấu chưa kết thúc!</p>
       </div>
-      <img class="hero-bg-img" src="image/anh 2.jfif" onerror="smartJfifFix(this, 'anh 2')" alt="Match Cover">
+      <img class="hero-bg-img" src="image/anh 10.jfif" onerror="smartJfifFix(this, 'anh 10')" alt="Match Cover">
     </div>
 
     <div class="hero-mid">
@@ -310,6 +310,7 @@
 
     <div class="hero-bottom-grid">
       
+   <!-- KHUNG PLAYER CÓ THANH KÉO TUA CHUẨN DI ĐỘNG -->
       <div class="music-app-card">
         <div>
           <div class="player-header">
@@ -324,12 +325,6 @@
             <input type="range" id="seekSlider" class="seek-slider" value="0" max="100" oninput="seekAudio(this.value)">
           </div>
         </div>
-
-        <div class="player-controls">
-          <span style="font-size:11px; color:var(--text-sub);" id="timeDisplay">0:00 / 0:00</span>
-          <button class="btn-play" id="playBtn" onclick="toggleAudio()">▶</button>
-        </div>
-      </div>
 
       <!-- ĐÃ CẬP NHẬT ĐÚNG 10 TÊN HIỂN THỊ CỦA BẠN -->
       <div class="avatars-box">
@@ -369,43 +364,40 @@
     <img id="modalFullImg" class="modal-content-img" src="" alt="Full Size">
   </div>
 
-  <!-- THẺ AUDIO TẬP TRUNG FILE MUSIC.MP3 -->
-  <audio id="bgmusic" loop preload="auto" playsinline webkit-playsinline>
-    <source src="music/music.mp3" type="audio/mpeg">
-    <source src="music/upsidedown.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    // BẬT / TẮT NHẠC
+// BẬT / TẮT NHẠC THỦ CÔNG
     function toggleAudio() {
-      var audio = document.getElementById('bgmusic');
-      var btn = document.getElementById('playBtn');
-
       if (audio.paused) {
-        audio.play().then(() => { 
-          btn.innerHTML = '⏸ PAUSE'; 
-        }).catch(err => console.log("Play blocked:", err));
+        audio.play().then(() => {
+          playBtn.innerText = '⏸ PAUSE';
+        }).catch(err => {
+          alert("Không thể tải file nhạc. Bạn hãy chắc chắn file 'music.mp3' đã có trong thư mục 'music/' trên GitHub nhé!");
+        });
       } else {
         audio.pause();
-        btn.innerHTML = '▶ PLAY';
+        playBtn.innerText = '▶ PLAY';
       }
     }
 
-    // KHI BẤM NÚT BẮT ĐẦU TRÊN ĐIỆN THOẠI -> VÀO TRANG VÀ NỔ NHẠC NGAY
-    function enterGame() {
-      document.getElementById('startScreen').classList.add('hide');
-      loadMessages();
+    // CẬP NHẬT THANH TUA REAL-TIME VÀ THỜI GIAN TRÊN ĐIỆN THOẠI
+    audio.addEventListener('timeupdate', () => {
+      if (audio.duration && !isNaN(audio.duration)) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        seekSlider.value = pct;
 
-      var audio = document.getElementById('bgmusic');
-      var btn = document.getElementById('playBtn');
+        let curMins = Math.floor(audio.currentTime / 60);
+        let curSecs = Math.floor(audio.currentTime % 60);
+        let durMins = Math.floor(audio.duration / 60);
+        let durSecs = Math.floor(audio.duration % 60);
 
-      audio.load();
-      audio.play().then(() => {
-        btn.innerHTML = '⏸ PAUSE';
-      }).catch(err => {
-        console.log("Autoplay prevented by mobile browser:", err);
-        btn.innerHTML = '▶ PLAY';
-      });
+        timeDisplay.innerText = `${curMins}:${curSecs < 10 ? '0' : ''}${curSecs} / ${durMins}:${durSecs < 10 ? '0' : ''}${durSecs}`;
+      }
+    });
+
+    // KÉO TUA NHẠC REAL-TIME
+    function seekAudio(value) {
+      if (audio.duration && !isNaN(audio.duration)) {
+        audio.currentTime = (value / 100) * audio.duration;
+      }
     }
 
     // Sửa Tên Ảnh Định Dạng .jfif, .jpg, .png
