@@ -384,37 +384,37 @@
     const seekSlider = document.getElementById('seekSlider');
     const timeDisplay = document.getElementById('timeDisplay');
 
-    // Hàm Mở Game & Giải Mã Âm Thanh Điện Thoại (Web Audio API Unlock)
+    // Mở Game & Ép Kích Hoạt Audio Context Trên Mobile
     function enterGame() {
       document.getElementById('startScreen').classList.add('hide');
       loadMessages();
 
-      // Kích hoạt phát âm thanh trực tiếp từ sự kiện bấm nút của người dùng
+      // Cố gắng phát nhạc ngay khi bấm nút bắt đầu
       audio.load();
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          playBtn.innerText = '⏸';
-        }).catch(err => {
-          console.log("Mobile Autoplay policy:", err);
-          playBtn.innerText = '▶';
-        });
-      }
+      audio.play().then(() => {
+        playBtn.innerText = '⏸';
+      }).catch(err => {
+        console.log("Mobile browser restricted autoplay:", err);
+        playBtn.innerText = '▶';
+      });
     }
 
-    // Bật / Tắt Nhạc Thủ Công
+    // Bật / Tắt Nhạc Thủ Công (Hỗ trợ cả chạm và click)
     function toggleAudio() {
       if (audio.paused) {
         audio.play().then(() => {
           playBtn.innerText = '⏸';
-        }).catch(err => console.log(err));
+        }).catch(err => {
+          console.log("Play error:", err);
+          alert("Hãy kiểm tra lại xem file nhạc đã có trong thư mục music/ trên GitHub chưa nhé!");
+        });
       } else {
         audio.pause();
         playBtn.innerText = '▶';
       }
     }
 
-    // Cập Nhật Thanh Tua Nhạc & Thời Gian Đang Chạy
+    // Cập Nhật Thời Gian & Thanh Kéo
     audio.addEventListener('timeupdate', () => {
       if (audio.duration && !isNaN(audio.duration)) {
         const pct = (audio.currentTime / audio.duration) * 100;
