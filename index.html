@@ -368,12 +368,11 @@
     <img id="modalFullImg" class="modal-content-img" src="" alt="Full Size">
   </div>
 
-  <!-- THẺ ÂM THANH ĐÃ ĐƯỢC ĐỐI CHIẾU CHÍNH XÁC VỚI FILE BẠN ĐÃ TẢI LÊN -->
+  <!-- THẺ ÂM THANH TỐI ƯU CHO GITHUB PAGES -->
   <audio id="bgmusic" loop preload="auto">
-    <source src="music/Biometrix x Sarah De Warren - The Upside Down_2.mp3" type="audio/mpeg">
-    <source src="music/Biometrix x Sarah De Warren - The Upside Down.mp3" type="audio/mpeg">
     <source src="music/upsidedown.mp3" type="audio/mpeg">
     <source src="music/music.mp3" type="audio/mpeg">
+    <source src="music/Biometrix x Sarah De Warren - The Upside Down_2.mp3" type="audio/mpeg">
   </audio>
 
   <script>
@@ -384,16 +383,22 @@
 
     // Mở Game & Phát Âm Thanh An Toàn
     function enterGame() {
+      // Luôn ẩn màn hình đen trước để không bị treo giao diện
       document.getElementById('startScreen').classList.add('hide');
       loadMessages();
 
-      // Phát nhạc sau khi ẩn màn hình đen
-      audio.play().then(() => {
-        playBtn.innerText = '⏸';
-      }).catch(err => {
-        console.log("Autoplay blocked or file not found:", err);
-        playBtn.innerText = '▶';
-      });
+      // Phát nhạc có xử lý lỗi mượt mà
+      if (audio) {
+        let playPromise = audio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            playBtn.innerText = '⏸';
+          }).catch(err => {
+            console.warn("Autoplay blocked or audio source not found:", err);
+            playBtn.innerText = '▶';
+          });
+        }
+      }
     }
 
     // Nút Bật / Tắt Nhạc Thủ Công
