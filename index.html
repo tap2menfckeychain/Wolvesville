@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Wolvesville - Shadow vs Vinh Duel</title>
   
+  <!-- Font chữ chuẩn Ma Sói & Modern Gaming Layout -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Montserrat:wght@400;600;700;800;900&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
@@ -65,9 +66,6 @@
       border-radius: 30px; cursor: pointer;
       box-shadow: 0 0 25px rgba(230, 25, 75, 0.5);
       transition: transform 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      user-select: none;
     }
     .btn-start:active { transform: scale(0.95); }
 
@@ -174,13 +172,9 @@
     .progress-bar-container { width: 100%; margin: 10px 0; }
     .seek-slider {
       -webkit-appearance: none;
-      appearance: none;
       width: 100%; height: 6px; border-radius: 3px;
       background: rgba(255, 255, 255, 0.2);
       outline: none; cursor: pointer;
-      touch-action: pan-y;
-      -webkit-user-select: none;
-      user-select: none;
     }
     .seek-slider::-webkit-slider-thumb {
       -webkit-appearance: none; appearance: none;
@@ -195,10 +189,6 @@
       border-radius: 50%; font-size: 16px; cursor: pointer; font-family: 'Bungee';
       display: flex; justify-content: center; align-items: center;
       box-shadow: 0 4px 12px rgba(230, 25, 75, 0.5);
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      -webkit-user-select: none;
-      user-select: none;
     }
 
     .avatars-box {
@@ -219,7 +209,7 @@
     .avatar-item:hover { transform: translateY(-3px); border-color: var(--red-accent); }
     .avatar-item img { width: 100%; height: 60px; object-fit: cover; border-radius: 6px; display: block; }
     .avatar-item span {
-      display: block; font-size: 8px; font-weight: 700; color: #e2e8f0;
+      display: block; font-size: 9px; font-weight: 700; color: #e2e8f0;
       margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
 
@@ -288,7 +278,7 @@
   <div class="start-screen" id="startScreen">
     <div class="game-logo">WOLVESVILLE</div>
     <p style="color: var(--text-sub); font-size: 13px; margin-bottom: 20px;">SEASON 79 • SHADOW VS VINH DUEL</p>
-    <button class="btn-start" id="btnStartGame" type="button">BẮT ĐẦU TRẬN ĐẤU ⚔️</button>
+    <button class="btn-start" onclick="enterGame()">BẮT ĐẦU TRẬN ĐẤU ⚔️</button>
   </div>
 
   <!-- GIAO DIỆN CHÍNH -->
@@ -310,7 +300,8 @@
     <div class="hero-mid">
       <div class="mid-text">
         <h2>KEEP MOVING FORWARD ON A STABLE JOURNEY</h2>
-        <p>Chúng ta đã là đối thủ của nhau từ 2023. Mặc dù có nhiều thời điểm bị ngắt quãng, không đụng độ nhau, ngươi vẫn luôn là đối thủ lớn nhất và khiến ta hứng thú nhất mỗi khi đụng độ. Lần đối đầu này, ta thắng người. Hẹn ngươi vào Tết 2027, chúng ta sẽ có một cuộc tái đấu khác. From S to V</p>
+        <p>Chúng ta đã là đối thủ của nhau từ 2023. Mặc dù có nhiều thời điểm bị ngắt quãng, không đụng độ nhau, ngươi vẫn luôn là đối thủ lớn nhất và khiến ta hứng thú nhất mỗi khi đụng độ. Lần đối đầu này, ta thắng người. Hẹn ngươi vào Tết 2027, chúng ta sẽ có một cuộc tái đấu khác. 
+          -From S to V- </p>
       </div>
       <div class="mid-img-wrapper">
         <img src="image/anh 1.jfif" onerror="smartJfifFix(this, 'anh 1')" alt="Mid Photo">
@@ -340,7 +331,6 @@
         </div>
       </div>
 
-      <!-- 10 TÊN HIỂN THỊ CỦA BẠN -->
       <div class="avatars-box">
         <div class="avatars-header">🐺 10 FRIENDS IN ROOM</div>
         <div class="avatar-grid">
@@ -366,7 +356,7 @@
         <button class="btn-send" onclick="postMessage()">GỬI</button>
       </div>
       <div class="notes-list" id="msgList">
-        <div class="note-card"><strong style="color:var(--gold-accent);">Shadow 🔥:</strong> Trận này tôi làm Sói thì ông chuẩn bị tinh thần chết đầu tiên đi nhé! NO LUCK ONLY SKILL!</div>
+        <div class="note-card"><strong style="color:var(--gold-accent);">Shadow 🔥:</strong> Trận này tôi làm Sói thì ông chuẩn bị tinh thần bị giết đầu tiên nhé! NO LUCK ONLY SKILL!</div>
         <div class="note-card" style="border-left-color: #22d3ee;"><strong style="color:#22d3ee;">Vinh ⚡:</strong> Gặp nhau ở vòng treo cổ em trai! PLAY SMART - STAY STRONG!</div>
       </div>
     </div>
@@ -378,7 +368,7 @@
     <img id="modalFullImg" class="modal-content-img" src="" alt="Full Size">
   </div>
 
-<!-- THẺ ÂM THANH ĐÃ ĐƯỢC ĐỐI CHIẾU CHÍNH XÁC VỚI FILE BẠN ĐÃ TẢI LÊN -->
+  <!-- THẺ ÂM THANH ĐÃ ĐƯỢC ĐỐI CHIẾU CHÍNH XÁC VỚI FILE BẠN ĐÃ TẢI LÊN -->
   <audio id="bgmusic" loop preload="auto">
     <source src="music/Biometrix x Sarah De Warren - The Upside Down_2.mp3" type="audio/mpeg">
     <source src="music/Biometrix x Sarah De Warren - The Upside Down.mp3" type="audio/mpeg">
@@ -440,41 +430,6 @@
       }
     }
 
-    // Cập nhật tiến trình thời gian
-    audio.addEventListener('timeupdate', function() {
-      if (!isSeeking && Number.isFinite(audio.duration) && audio.duration > 0) {
-        seekSlider.value = (audio.currentTime / audio.duration) * 100;
-      }
-
-      timeDisplay.innerText =
-        `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
-    });
-
-    // Hàm tua nhạc
-    function seekAudio(value) {
-      if (Number.isFinite(audio.duration) && audio.duration > 0) {
-        audio.currentTime = (Number(value) / 100) * audio.duration;
-      }
-    }
-
-    // Sự kiện kéo thanh tua
-    seekSlider.addEventListener('pointerdown', function() {
-      isSeeking = true;
-    });
-
-    seekSlider.addEventListener('pointerup', function() {
-      isSeeking = false;
-      seekAudio(this.value);
-    });
-
-    seekSlider.addEventListener('change', function() {
-      isSeeking = false;
-      seekAudio(this.value);
-    });
-
-    audio.addEventListener('play', updatePlayButton);
-    audio.addEventListener('pause', updatePlayButton);
-
     // Sửa Tên Ảnh Định Dạng .jfif, .jpg, .png
     function smartJfifFix(img, name) {
       const cleanName = name.replace(/\s+/g, '');
@@ -514,7 +469,7 @@
       });
     });
 
-    // Tường Lời Nhắn
+    // Lời Nhắn Tường Cờ
     function postMessage() {
       const input = document.getElementById('chatInput');
       const text = input.value.trim();
@@ -533,7 +488,7 @@
       let msgs = JSON.parse(localStorage.getItem('wv_chat_notes') || '[]');
 
       let html = `
-        <div class="note-card"><strong style="color:var(--gold-accent);">Shadow 🔥:</strong> Trận này tôi làm Sói thì ông chuẩn bị nhận đạn nhé! NO LUCK ONLY SKILL!</div>
+        <div class="note-card"><strong style="color:var(--gold-accent);">Shadow 🔥:</strong> Trận này tôi làm Sói thì ông chuẩn bị tinh thần chết đầu tiên đi nhé! NO LUCK ONLY SKILL!</div>
         <div class="note-card" style="border-left-color: #22d3ee;"><strong style="color:#22d3ee;">Vinh ⚡:</strong> Gặp nhau ở vòng treo cổ em trai! PLAY SMART - STAY STRONG!</div>
       `;
 
