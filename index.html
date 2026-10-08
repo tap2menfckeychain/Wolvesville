@@ -148,49 +148,31 @@
     }
     .mid-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* SECTION 3: MUSIC PLAYER */
+    /* SECTION 3: MUSIC PLAYER & AVATARS */
     .hero-bottom-grid {
       display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; width: 100%;
     }
 
-    .music-app-card {
+    .music-player {
       background: rgba(20, 8, 12, 0.95); border: 1px solid var(--card-border);
-      border-radius: 20px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      display: flex; flex-direction: column; justify-content: space-between;
+      border-radius: 20px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      gap: 15px; text-align: center;
     }
-
-    .player-header {
-      display: flex; align-items: center; gap: 12px; margin-bottom: 15px;
+    .music-info {
+      font-family: 'Bungee', cursive; font-size: 15px; color: var(--gold-accent);
+      letter-spacing: 0.5px; line-height: 1.4;
     }
-    .player-cover {
-      width: 55px; height: 55px; border-radius: 12px; object-fit: cover;
-      border: 2px solid var(--gold-accent); cursor: pointer;
-    }
-    .player-title-box h3 { font-size: 14px; font-weight: 800; color: #fff; }
-    .player-title-box p { font-size: 11px; color: var(--text-sub); }
-
-    .progress-bar-container { width: 100%; margin: 10px 0; }
-    .seek-slider {
-      -webkit-appearance: none;
-      width: 100%; height: 6px; border-radius: 3px;
-      background: rgba(255, 255, 255, 0.2);
-      outline: none; cursor: pointer;
-    }
-    .seek-slider::-webkit-slider-thumb {
-      -webkit-appearance: none; appearance: none;
-      width: 14px; height: 14px; border-radius: 50%;
-      background: var(--red-accent); cursor: pointer;
-      box-shadow: 0 0 8px rgba(230, 25, 75, 0.8);
-    }
-
-    .player-controls { display: flex; justify-content: space-between; align-items: center; }
-    .btn-play {
-      background: var(--red-accent); color: #fff; border: none; width: 44px; height: 44px;
-      border-radius: 50%; font-size: 16px; cursor: pointer; font-family: 'Bungee';
-      display: flex; justify-content: center; align-items: center;
-      box-shadow: 0 4px 12px rgba(230, 25, 75, 0.5);
+    .play-btn {
+      background: linear-gradient(135deg, var(--red-accent), #990026);
+      color: #fff; border: none; padding: 12px 28px;
+      font-family: 'Bungee', cursive; font-size: 14px;
+      border-radius: 25px; cursor: pointer;
+      box-shadow: 0 4px 15px rgba(230, 25, 75, 0.5);
+      transition: transform 0.2s, background 0.3s;
       -webkit-tap-highlight-color: transparent;
     }
+    .play-btn:active { transform: scale(0.92); }
 
     .avatars-box {
       background: rgba(20, 8, 12, 0.95); border: 1px solid var(--card-border);
@@ -310,28 +292,13 @@
 
     <div class="hero-bottom-grid">
       
-      <div class="music-app-card">
-        <div>
-          <div class="player-header">
-            <img class="player-cover" src="image/anh 1.jfif" onerror="smartJfifFix(this, 'anh 1')" alt="Cover">
-            <div class="player-title-box">
-              <h3>The Upside Down</h3>
-              <p>Biometrix x Sarah De Warren</p>
-            </div>
-          </div>
-
-          <div class="progress-bar-container">
-            <input type="range" id="seekSlider" class="seek-slider" value="0" max="100" oninput="seekAudio(this.value)">
-          </div>
-        </div>
-
-        <div class="player-controls">
-          <span style="font-size:11px; color:var(--text-sub);" id="timeDisplay">0:00 / 0:00</span>
-          <button class="btn-play" id="playBtn" onclick="toggleAudio()">▶</button>
-        </div>
+      <!-- KHU VỰC PHÁT NHẠC ĐƠN GIẢN HÓA CỦA BẠN -->
+      <div class="music-player">
+        <div class="music-info"> The Upside Down 🎶</div>
+        <button class="play-btn" id="playBtn" onclick="toggleAudio()">▶ PLAY</button>
       </div>
 
-      <!-- ĐÃ CẬP NHẬT ĐÚNG 10 TÊN HIỂN THỊ CỦA BẠN -->
+      <!-- 10 ẢNH VÀ TÊN HIỂN THỊ -->
       <div class="avatars-box">
         <div class="avatars-header">🐺 10 FRIENDS IN ROOM</div>
         <div class="avatar-grid">
@@ -369,12 +336,17 @@
     <img id="modalFullImg" class="modal-content-img" src="" alt="Full Size">
   </div>
 
- <!-- KHU VỰC PHÁT NHẠC ĐƠN GIẢN HÓA CỦA BẠN -->
-      <div class="music-player">
-        <div class="music-info"> The Upside Down 🎶</div>
-        <button class="play-btn" id="playBtn" onclick="toggleAudio()">▶ PLAY</button>
-      </div>
-  // BẬT / TẮT NHẠC ĐƠN GIẢN CHUẨN CỦA BẠN
+  <!-- THẺ AUDIO CÓ NGUỒN TẬP TIN DỰ PHÒNG CHUẨN CẢ DI ĐỘNG & MÁY TÍNH -->
+  <audio id="bgmusic" loop preload="auto" playsinline webkit-playsinline>
+    <source src="music/upsidedown.mp3" type="audio/mpeg">
+    <source src="music/Biometrix%20x%20Sarah%20De%20Warren%20-%20The%20Upside%20Down_3.mp3" type="audio/mpeg">
+    <source src="music/Biometrix%20x%20Sarah%20De%20Warren%20-%20The%20Upside%20Down_2.mp3" type="audio/mpeg">
+    <source src="music/Biometrix%20x%20Sarah%20De%20Warren%20-%20The%20Upside%20Down.mp3" type="audio/mpeg">
+    <source src="music/music.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // BẬT / TẮT NHẠC ĐƠN GIẢN VÀ HIỆU QUẢ
     function toggleAudio() {
       var audio = document.getElementById('bgmusic');
       var btn = document.getElementById('playBtn');
@@ -382,23 +354,34 @@
       if (audio.paused) {
         audio.play().then(() => { 
           btn.innerHTML = '⏸ PAUSE'; 
-        }).catch(err => console.log(err));
+        }).catch(err => {
+          console.log("Audio play error:", err);
+        });
       } else {
         audio.pause();
         btn.innerHTML = '▶ PLAY';
       }
     }
 
-    // MỞ GAME & TỰ ĐỘNG PHÁT NHẠC KHI BẤM BẮT ĐẦU
+    // MỞ GAME & TỰ ĐỘNG PHÁT NHẠC KHI BẤM BẮT ĐẦU TRÊN ĐIỆN THOẠI
     function enterGame() {
       document.getElementById('startScreen').classList.add('hide');
       loadMessages();
       
-      // Tự động mồi nhạc khi bắt đầu trận đấu
-      toggleAudio();
+      // Kích hoạt nhạc trực tiếp từ sự kiện chạm tay của người dùng
+      var audio = document.getElementById('bgmusic');
+      var btn = document.getElementById('playBtn');
+      
+      audio.load();
+      audio.play().then(() => {
+        btn.innerHTML = '⏸ PAUSE';
+      }).catch(err => {
+        console.log("Autoplay restricted:", err);
+        btn.innerHTML = '▶ PLAY';
+      });
     }
 
-    // Sửa Tên Ảnh Định Dạng .jfif, .jpg, .png
+    // SỬA TÊN ẢNH ĐỊNH DẠNG .jfif, .jpg, .png
     function smartJfifFix(img, name) {
       const cleanName = name.replace(/\s+/g, '');
       const variations = [
@@ -419,7 +402,7 @@
       }
     }
 
-    // Lightbox Phóng To Ảnh
+    // LIGHTBOX PHÓNG TO ẢNH
     function openImgModal(src) {
       document.getElementById('modalFullImg').src = src;
       document.getElementById('imgModal').classList.add('show');
@@ -437,7 +420,7 @@
       });
     });
 
-    // Tường Lời Nhắn
+    // TƯỜNG LỜI NHẮN
     function postMessage() {
       const input = document.getElementById('chatInput');
       const text = input.value.trim();
